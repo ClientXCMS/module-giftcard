@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-sm-12 col-md-3">
+        {{ field('code', item.code ?? defaultcode, trans("giftcard.admin.code")) }}
+    </div>
+
+    <div class="col-sm-12 col-md-3">
+        {{ field('maxusages', item.maxusages,  trans("giftcard.admin.maxusages")) }}
+    </div>
+
+    <div class="col-sm-12 col-md-3">
+        {{ field('type', item.type, trans("type"), {options:types}) }}
+    </div>
+    <div class="col-sm-12 col-md-3">
+
+    {{ field('user_id', item.userId ?? 0, trans("user"),{options: user}, {'is': 'custom-select', 'data-url': path('account.admin.search')}) }}
+    </div>
+    <div class="col-sm-12 col-md-12" id="FixedAmount">
+        {{ field('amount', item.amount, trans("amount")) }}
+    </div>
+
+    <div class="col-sm-12 col-md-6 RandomAmount">
+        {{ field('min_range', item.minRange, trans("amount") ~ " (Min)") }}
+    </div>
+
+    <div class="col-sm-12 col-md-6 RandomAmount">
+        {{ field('max_range', item.maxRange, trans("amount") ~ " (Max)") }}
+    </div>
+    {% if usernames is not empty %}
+    <div class="col-sm-12 col-md-12">
+    {{ field('emails', usernames, trans("giftcard.admin.usages", {"%max%": item.maxusages, "%usages%": item.usages | length}), {}, {disabled: true}) }}
+    </div>
+    {% endif %}
+    {{ csrf_input() }}
+
+
+
+
+</div>

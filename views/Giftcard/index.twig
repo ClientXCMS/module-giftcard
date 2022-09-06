@@ -1,0 +1,33 @@
+
+
+    <div class="card card-body">
+        <h4>{{ trans("giftcard.title") }}</h4>
+        <p>{{ trans("giftcard.subtitle") }}</p>
+
+        {% if success %}
+
+            <div class="alert alert-success">
+                {{ trans("giftcard.success", {"%amount%": amount ~ " "  ~config('app.currency') | symbol_for})}}
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div class="alert alert-success">
+                {{ trans(error) }}
+            </div>
+        {% endif %}
+        <form method="POST" action="{{ path('giftcard.submit') }}">
+            {{ csrf_input() }}
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    {{ field('code', code, trans("giftcard.code"), {type: 'text'}) }}
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <button class="btn btn-primary btn-block" style="margin-top: 10px!important;" type="submit">
+                        <i class="fas fa-pen"></i>
+                        {{ trans("giftcard.submit") }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>

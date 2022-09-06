@@ -1,0 +1,57 @@
+{% extends '@admin/layout.twig' %}
+
+
+{% block title trans("giftcard.title") %}
+{% block pagetitle trans("giftcard.title") %}
+{% block pagesubtitle trans("giftcard.admin.subtitle") %}
+{% block script %}
+
+    <script src="/modules/Admin/js/select.js"></script>
+    <script>
+        /**
+         *
+         * @param {HTMLSelectElement} element
+         */
+        function checkTarget(element) {
+            if (element.selectedIndex == 0) {
+                Array.from(document.getElementsByClassName("RandomAmount")).map((el) => {
+                    el.style.display = 'none';
+                })
+                document.getElementById("FixedAmount").style.display = 'block';
+            } else {
+                {
+                    Array.from(document.getElementsByClassName("RandomAmount")).map((el) => {
+                        el.style.display = 'block';
+                    })
+                    document.getElementById("FixedAmount").style.display = 'none';
+                }
+            }
+        }
+
+        const element = document.getElementById("type");
+        element.addEventListener("change", (e) => {
+            console.log(e)
+            checkTarget(e.target)
+        })
+        checkTarget(element)
+
+
+    </script>
+{% endblock %}
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+
+                    <form method="post" action="{{ path(routePrefix ~ '.create') }}">
+                        {% include viewPath ~ '/form.twig' %}
+                        {{ csrf_input() }}
+                        <button type="submit" class="btn btn-primary mr-1 mt-2">{{ trans("create") }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends '@admin/layout.twig' %}
+
+{% block title trans("giftcard.title") %}
+{% block pagetitle trans("giftcard.title") %}
+{% block pagesubtitle trans("giftcard.admin.subtitle") %}
+{% block script %}
+
+    <script src="/modules/Admin/js/select.js"></script>
+    <script>
+        /**
+         *
+         * @param {HTMLSelectElement} element
+         */
+        function checkTarget(element) {
+            if (element.selectedIndex == 0) {
+                Array.from(document.getElementsByClassName("RandomAmount")).map((el) => {
+                    el.style.display = 'none';
+                })
+                document.getElementById("FixedAmount").style.display = 'block';
+            } else {
+                {
+                    Array.from(document.getElementsByClassName("RandomAmount")).map((el) => {
+                        el.style.display = 'block';
+                    })
+                    document.getElementById("FixedAmount").style.display = 'none';
+                }
+            }
+        }
+
+        const element = document.getElementById("type");
+        element.addEventListener("change", (e) => {
+            console.log(e)
+            checkTarget(e.target)
+        })
+        checkTarget(element)
+
+
+    </script>
+{% endblock %}
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ path(routePrefix ~'.edit', {id: item.id}) }}" method="post">
+                {% include viewPath ~ '/form.twig' with { 'edit': true } %}
+                <button type="submit" class="btn btn-primary">{{ trans("save") }}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
