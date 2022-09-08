@@ -29,7 +29,7 @@ class GiftcardModule extends \ClientX\Module
     public function __construct(RendererInterface $renderer, ThemeInterface $theme, Router $router, ContainerInterface $container)
     {
         $renderer->addPath('giftcard', $theme->getViewsPath() . '/Giftcard');
-        $renderer->addPath('giftcard_admin', __DIR__ .'/Views');
+        $renderer->addPath('giftcard_admin', __DIR__ .'/views');
         $prefix = $container->get('clientarea.prefix');
         $router->post($prefix . '/giftcard', GiftAddCard::class, 'giftcard.submit');
         if ($container->has('admin.prefix')){
