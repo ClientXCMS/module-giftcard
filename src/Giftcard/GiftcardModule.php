@@ -24,6 +24,7 @@ class GiftcardModule extends \ClientX\Module
     const TRANSLATIONS = [
         "fr_FR" => __DIR__ . '/trans/fr.php',
         "en_GB" => __DIR__ . '/trans/en.php',
+        "es_ES" => __DIR__ . '/trans/es.php'
     ];
 
     public function __construct(RendererInterface $renderer, ThemeInterface $theme, Router $router, ContainerInterface $container)
