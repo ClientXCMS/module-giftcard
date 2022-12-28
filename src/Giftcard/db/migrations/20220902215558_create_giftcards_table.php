@@ -15,7 +15,7 @@ class CreateGiftcardsTable extends AbstractMigration
             ->addColumn("amount", "float", ['null' => true])
             ->addColumn("min_range", "float", ['null' => true])
             ->addColumn("max_range", "float", ['null' => true])
-            ->addColumn("usages", "json")
+            ->addColumn("usages", "text")
             ->addColumn("maxusages", "integer", ['null' => 100])
             ->addTimestamps()
             ->create();
