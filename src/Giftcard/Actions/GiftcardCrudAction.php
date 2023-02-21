@@ -26,7 +26,7 @@ class GiftcardCrudAction extends \ClientX\Actions\CrudAction
     protected $moduleName = "Gift card";
 
     protected $fillable = [
-        'code', 'min_range', 'max_range', 'type', 'maxusages', 'user_id', 'amount'
+        'code', 'min_range', 'max_range', 'type', 'maxusages', 'user_id', 'amount', 'expire_at'
     ];
     private UserTable $userTable;
     public function __construct(RendererInterface $renderer, GiftTable $table, Router $router, FlashService $flash, UserTable $userTable)

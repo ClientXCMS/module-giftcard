@@ -5,8 +5,10 @@ namespace App\Giftcard\Actions;
 use App\Auth\Database\UserTable;
 use App\Auth\DatabaseUserAuth;
 use App\Giftcard\Database\GiftTable;
+use App\Giftcard\GiftAddEvent;
 use App\Giftcard\GiftcardModule;
 use ClientX\Database\NoRecordException;
+use ClientX\Event\EventManager;
 use ClientX\Helpers\Currency;
 use ClientX\Session\FlashService;
 use ClientX\Session\SessionInterface;
@@ -22,8 +24,9 @@ class GiftAddCard extends \ClientX\Actions\Action
     private UserTable $userTable;
     private SessionInterface $session;
     private string $currency;
+    private EventManager $eventManager;
 
-    public function __construct(GiftTable $table, UserTable $userTable, string $currency,DatabaseUserAuth $auth, SessionInterface $session, Translater $translater)
+    public function __construct(GiftTable $table, UserTable $userTable, string $currency,DatabaseUserAuth $auth, SessionInterface $session, Translater $translater, EventManager $eventManager)
     {
         $this->table = $table;
         $this->userTable = $userTable;
@@ -31,6 +34,7 @@ class GiftAddCard extends \ClientX\Actions\Action
         $this->session = $session;
         $this->translater = $translater;
         $this->currency = $currency;
+        $this->eventManager = $eventManager;
     }
 
     public function __invoke(ServerRequestInterface $request)
@@ -44,6 +48,8 @@ class GiftAddCard extends \ClientX\Actions\Action
                 /** @var \App\Giftcard\Giftcard $gift */
                 $gift = $this->table->findBy("code", $code);
                 if ($gift->canUse($this->getUserId())) {
+                    $this->eventManager->trigger(new GiftAddEvent($gift));
+
                     $amount = $gift->getAmount();
                     /** @var \App\Account\User $user */
                     $user = $this->getUser();

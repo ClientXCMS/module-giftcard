@@ -16,6 +16,7 @@ class Giftcard
     public ?float $maxRange = null;
     public array $usages = [];
     public int $maxusages = 100;
+    public ?\DateTime $expireAt = null;
     use Timestamp;
 
     public function canUse(int $userId)
@@ -24,6 +25,9 @@ class Giftcard
             return $this->userId == $userId && !in_array($userId, $this->usages);
         }
         if (in_array($userId, $this->usages) || $this->maxusages == count($this->usages)) {
+            return false;
+        }
+        if ($this->getExpireAt() != null && $this->getExpireAt()->format('U') < time()){
             return false;
         }
         return true;
@@ -75,5 +79,21 @@ class Giftcard
         if ($amount){
             $this->amount = (float)$amount;
         }
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getExpireAt(): ?\DateTime
+    {
+        return $this->expireAt;
+    }
+
+    /**
+     * @param string|null $expireAt
+     */
+    public function setExpireAt(?string $expireAt): void
+    {
+        $this->expireAt = new \DateTime($expireAt);
     }
 }

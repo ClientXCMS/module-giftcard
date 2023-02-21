@@ -3,16 +3,20 @@
         {{ field('code', item.code ?? defaultcode, trans("giftcard.admin.code")) }}
     </div>
 
-    <div class="col-sm-12 col-md-3">
+    <div class="col-sm-12 col-md-2">
         {{ field('maxusages', item.maxusages,  trans("giftcard.admin.maxusages")) }}
     </div>
 
-    <div class="col-sm-12 col-md-3">
+    <div class="col-sm-12 col-md-2">
         {{ field('type', item.type, trans("type"), {options:types}) }}
     </div>
-    <div class="col-sm-12 col-md-3">
+    <div class="col-sm-12 col-md-2">
 
     {{ field('user_id', item.userId ?? 0, trans("user"),{options: user}, {'is': 'custom-select', 'data-url': path('account.admin.search')}) }}
+    </div>
+
+    <div class="col-sm-12 col-md-3">
+        {{ field('expire_at', item.expireAt ? item.expireAt.format('Y-m-d H:i:s') : null, trans("giftcard.admin.expire_at"), {class:'date-picker form-control'}) }}
     </div>
     <div class="col-sm-12 col-md-12" id="FixedAmount">
         {{ field('amount', item.amount, trans("amount")) }}
@@ -27,7 +31,7 @@
     </div>
     {% if usernames is not empty %}
     <div class="col-sm-12 col-md-12">
-    {{ field('emails', usernames, trans("giftcard.admin.usages", {"%max%": item.maxusages, "%usages%": item.usages | length}), {}, {disabled: true}) }}
+    {{ field('emails', usernames, trans("giftcard.admin.usages", {"%max%": item.maxusages, "%utilisation%": item.usages | length}), {}, {disabled: true}) }}
     </div>
     {% endif %}
     {{ csrf_input() }}

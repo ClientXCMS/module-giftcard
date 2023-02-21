@@ -26,7 +26,9 @@ class GiftTable extends Table
 
         } else {
             $params['maxusages'] = 1;
-
+        }
+        if (empty($params['expire_at'])){
+            $params['expire_at'] = null;
         }
         if ($params['type'] == 'fixed'){
             $params['amount'] = (float) $params['amount'];
@@ -44,14 +46,15 @@ class GiftTable extends Table
 
     public function update($condition, $params, $where = 'id'): bool
     {
-
         if ($params['user_id'] == 0){
             $params['user_id'] = null;
             $params['maxusages'] = (int) $params['maxusages'];
 
         } else {
             $params['maxusages'] = 1;
-
+        }
+        if (empty($params['expire_at'])){
+            $params['expire_at'] = null;
         }
         if ($params['type'] == 'fixed'){
             $params['amount'] = (float) $params['amount'];

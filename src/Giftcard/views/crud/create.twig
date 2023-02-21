@@ -6,6 +6,7 @@
 {% block pagesubtitle trans("giftcard.admin.subtitle") %}
 {% block script %}
 
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js" rel="stylesheet">
     <script src="/modules/Admin/js/select.js"></script>
     <script>
         /**
@@ -30,11 +31,16 @@
 
         const element = document.getElementById("type");
         element.addEventListener("change", (e) => {
-            console.log(e)
             checkTarget(e.target)
         })
         checkTarget(element)
 
+        flatpickr('.date-picker', {
+            time_24hr: true,
+            enableTime: true,
+            enableSeconds: true,
+            minuteIncrement: 1
+        });
 
     </script>
 {% endblock %}
