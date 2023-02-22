@@ -27,7 +27,7 @@ class Giftcard
         if (in_array($userId, $this->usages) || $this->maxusages == count($this->usages)) {
             return false;
         }
-        if ($this->getExpireAt() != null && $this->getExpireAt()->format('U') < time()){
+        if ($this->getExpireAt() != null && $this->getExpireAt()->format('U') > time()){
             return false;
         }
         return true;
@@ -38,7 +38,7 @@ class Giftcard
         if ($this->type == 'fixed') {
             return $this->amount;
         }
-        return rand($this->minRange, $this->maxRange);
+        return $this->decimalRand($this->minRange, $this->maxRange);
     }
 
     public function use(int $userId)
@@ -95,5 +95,11 @@ class Giftcard
     public function setExpireAt(?string $expireAt): void
     {
         $this->expireAt = new \DateTime($expireAt);
+    }
+
+    private function decimalRand(float $iMin, float $iMax, $fSteps = 0.05)
+    {
+        $a = range($iMin, $iMax, $fSteps);
+        return $a[mt_rand(0, count($a)-1)];
     }
 }
