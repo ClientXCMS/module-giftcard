@@ -27,7 +27,7 @@ class Giftcard
         if (in_array($userId, $this->usages) || $this->maxusages == count($this->usages)) {
             return false;
         }
-        if ($this->getExpireAt() != null && $this->getExpireAt()->format('U') > time()){
+        if ($this->getExpireAt() != null && $this->getExpireAt()->format('U') < time()){
             return false;
         }
         return true;
